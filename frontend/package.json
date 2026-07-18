@@ -1,0 +1,5 @@
+{
+  "name": "piwigo-pwa",
+  "packageManager": "yarn@4.12.0",
+  "private": true
+}

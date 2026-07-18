@@ -1,0 +1,34 @@
+<div class="titrePage">
+  <h2>PWA Backend</h2>
+</div>
+
+<form class="properties" method="post" action="{$PWA_BACKEND_ADMIN}">
+  <div id="configContent">
+    <fieldset class="mainConf">
+      <legend>
+        <span class="icon-cog icon-purple"></span>
+        {'Configuration'|translate}
+      </legend>
+
+      <ul>
+        <li>
+          <label for="frontend_url">Frontend url</label>
+          <br>
+          <input type="text" id="frontend_url" name="frontend_url" size="50" value="{$config.frontend_url}" required>
+        </li>
+      </ul>
+    </fieldset>
+  </div>
+
+  <div class="savebar-footer">
+    <div class="savebar-footer-start"></div>
+    <div class="savebar-footer-end">
+      <div class="savebar-footer-block">
+        <button class="buttonLike" type="submit" name="submit">
+          <i class="icon-floppy"></i>
+          {'Save Settings'|translate}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
