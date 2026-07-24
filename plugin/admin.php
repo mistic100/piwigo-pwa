@@ -10,9 +10,8 @@ if (isset($_POST['submit'])) {
     $page['errors'][] = 'Frontend URL must be an absolute URL';
   }
 
-  $conf[PWA_BACKEND_ID] = array(
-    'frontend_url' => $_POST['frontend_url'],
-  );
+  $conf[PWA_BACKEND_ID]['frontend_url'] = rtrim($_POST['frontend_url'], '/');
+  $conf[PWA_BACKEND_ID]['add_cors_headers'] = isset($_POST['add_cors_headers']);
 
   if ($valid) {
     conf_update_param(PWA_BACKEND_ID, $conf[PWA_BACKEND_ID]);

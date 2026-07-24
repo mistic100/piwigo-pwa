@@ -1,7 +1,6 @@
-import {
+import type {
     AddCommentParams,
     AddCommentResult,
-    ApiConfig,
     ApiResult,
     Category,
     GetCategoriesParams,
@@ -28,8 +27,10 @@ import {
 
 export class PiwigoApi {
 
-    constructor(private config: ApiConfig) {
-
+    constructor(private host: string) {
+        if (host.endsWith('/')) {
+            this.host = host.slice(0, -1);
+        }
     }
 
     getVersion(): Promise<Version> {
@@ -204,14 +205,18 @@ export class PiwigoApi {
             };
         }
 
-        const url = `${this.config.host}/ws.php?` + searchParams;
+        const url = `${this.host}/ws.php?` + searchParams;
+
+        const headers: Record<string, string> = {
+            'Accept': 'application/json',
+        };
+        if (body) {
+            headers['Content-Type'] = 'application/json';
+        }
 
         const response = await fetch(url, {
             method,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+            headers,
             body: body ? JSON.stringify(body) : undefined,
         });
 

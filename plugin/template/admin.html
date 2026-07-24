@@ -1,3 +1,5 @@
+{combine_script id='common' load='footer' path='admin/themes/default/js/common.js'}
+
 <div class="titrePage">
   <h2>PWA Backend</h2>
 </div>
@@ -12,7 +14,16 @@
 
       <ul>
         <li>
-          <label for="frontend_url">Frontend url</label>
+          <label class="font-checkbox">
+            <span class="icon-check"></span>
+            <input type="checkbox" name="add_cors_headers" {if ($config.add_cors_headers)}checked="checked"{/if}>
+            Add CORS headers to API services
+            <span class="icon-help-circled tiptip" title="Adds the &quot;Access-Control-Allow-Origin&quot; HTTP header with the specified frontend URL to all API responses." style="cursor:help"></span>
+          </label>
+        </li>
+
+        <li>
+          <label for="frontend_url">Frontend URL</label>
           <br>
           <input type="text" id="frontend_url" name="frontend_url" size="50" value="{$config.frontend_url}" required>
         </li>

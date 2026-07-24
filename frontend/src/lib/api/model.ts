@@ -1,7 +1,3 @@
-export type ApiConfig = {
-    host: string;
-};
-
 export type ApiResult<TResult> = {
     stat: 'ok' | 'fail';
     result?: TResult;
@@ -38,6 +34,9 @@ export type PwaConfig = {
     gallery_title: string;
     page_banner: string;
     week_starts_on: string;
+    category_url_style: 'id' | 'id-name';
+    picture_url_style: 'id' | 'id-file' | 'file';
+    tag_url_style: 'id' | 'id-tag' | 'tag';
 
     activate_comments: boolean;
     comments_forall: boolean;
@@ -162,7 +161,7 @@ export type Derivative = {
 
 export type Image = {
     is_favorite: boolean;
-    id: number,
+    id: number;
     width: number;
     height: number;
     hit: number;

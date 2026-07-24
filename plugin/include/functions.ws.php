@@ -28,6 +28,9 @@ function pwa_backend_ws_get_config()
         'gallery_title',
         'page_banner',
         'week_starts_on',
+        'category_url_style',
+        'picture_url_style',
+        'tag_url_style',
 
         'activate_comments',
         'comments_forall',
@@ -64,12 +67,18 @@ function pwa_backend_ws_get_config()
  */
 function pwa_backend_ws_patch_methods($result, $methodName, $params)
 {
+    global $conf;
+
     if (
         $methodName === 'pwg.categories.getImages'
         || $methodName === 'pwg.images.search'
         || $methodName === 'pwg.tags.getImages'
     ) {
         pwa_backend_ws_patch_getImages($result);
+    }
+
+    if ($conf[PWA_BACKEND_ID]['add_cors_headers']) {
+        @header('Access-Control-Allow-Origin: ' . $conf[PWA_BACKEND_ID]['frontend_url']);
     }
 
     return $result;

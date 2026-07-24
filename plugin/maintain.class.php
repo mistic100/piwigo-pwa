@@ -7,6 +7,7 @@ class pwa_backend_maintain extends PluginMaintain
 {
   private $default_conf = array(
     'frontend_url' => null,
+    'add_cors_headers' => true,
   );
 
   function install($plugin_version, &$errors = array())

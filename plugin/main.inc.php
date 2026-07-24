@@ -48,11 +48,20 @@ if (defined('IN_ADMIN')) {
   add_event_handler('init', 'pwa_backend_check_ws_core');
   function pwa_backend_check_ws_core()
   {
+    global $page, $conf;
+
     $ws_core_file = PHPWG_ROOT_PATH . 'include/ws_core.inc.php';
     $content = file_get_contents($ws_core_file);
     if (strpos($content, "trigger_change('ws_result'") === false) {
-      global $page;
       $page['errors'][] = 'PWA Backend plugin requires to manually patch the include/ws_core.inc.php file';
+    }
+
+    if ($conf['picture_url_style'] === 'file') {
+      $page['errors'][] = 'PWA Backend plugin is not compatible with "picture_url_style"="file"';
+    }
+
+    if ($conf['tag_url_style'] === 'tag') {
+      $page['errors'][] = 'PWA Backend plugin is not compatible with "tag_url_style"="tag"';
     }
   }
 }
