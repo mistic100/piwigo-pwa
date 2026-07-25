@@ -39,7 +39,7 @@ function pwa_backend_init()
 
 
 if (defined('IN_WS')) {
-  add_event_handler('ws_add_methods', 'pwa_backend_ws_add_methods', EVENT_HANDLER_PRIORITY_NEUTRAL, PWA_BACKEND_PATH . 'include/functions.ws.php');
+  add_event_handler('ws_add_methods', 'pwa_backend_ws_add_methods', EVENT_HANDLER_PRIORITY_NEUTRAL+1, PWA_BACKEND_PATH . 'include/functions.ws.php');
   add_event_handler('ws_result', 'pwa_backend_ws_patch_methods', EVENT_HANDLER_PRIORITY_NEUTRAL, PWA_BACKEND_PATH . 'include/functions.ws.php');
 }
 

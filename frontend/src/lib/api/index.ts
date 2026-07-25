@@ -2,9 +2,11 @@ import type {
     AddCommentParams,
     AddCommentResult,
     ApiResult,
-    Category,
+    CategoryInfo,
+    CategoryWithSubCategories,
     GetCategoriesParams,
     GetCategoryImagesParams,
+    GetCategoryInfoParams,
     GetImageInfoParams,
     GetTagImagesParams,
     GetTagsParams,
@@ -27,7 +29,11 @@ import type {
 
 export class PiwigoApi {
 
-    constructor(private host: string) {
+    constructor(
+        private host: string,
+        private fetch = window.fetch,
+        private onError?: (code: number, message: string) => void
+    ) {
         if (host.endsWith('/')) {
             this.host = host.slice(0, -1);
         }
@@ -40,6 +46,7 @@ export class PiwigoApi {
         });
     }
 
+    // custom method
     getConfig(): Promise<PwaConfig> {
         return this.call<PwaConfig>({
             method: 'GET',
@@ -82,10 +89,21 @@ export class PiwigoApi {
         });
     }
 
-    getCategories(params?: GetCategoriesParams): Promise<Category[]> {
-        return this.call<Category[]>({
+    async getCategories(params?: GetCategoriesParams): Promise<CategoryWithSubCategories[]> {
+        const result = await this.call<{ categories: CategoryWithSubCategories[] }>({
             method: 'GET',
             methodName: 'pwg.categories.getList',
+            params,
+        });
+
+        return result.categories.filter(({ name_raw }) => !name_raw.includes('<!--hidden-->'));
+    }
+
+    // custom method
+    getCategoryInfo(params?: GetCategoryInfoParams): Promise<CategoryInfo> {
+        return this.call<CategoryInfo>({
+            method: 'GET',
+            methodName: 'pwa.categories.getInfo',
             params,
         });
     }
@@ -214,7 +232,7 @@ export class PiwigoApi {
             headers['Content-Type'] = 'application/json';
         }
 
-        const response = await fetch(url, {
+        const response = await this.fetch(url, {
             method,
             headers,
             body: body ? JSON.stringify(body) : undefined,
@@ -225,7 +243,10 @@ export class PiwigoApi {
         if (result.stat === 'ok') {
             return result.result as TResult;
         } else {
-            return Promise.reject(result)
+            if (this.onError) {
+                this.onError(result.err, result.message);
+            }
+            return Promise.reject(response)
         }
     }
 

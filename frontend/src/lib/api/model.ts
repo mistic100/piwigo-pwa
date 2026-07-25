@@ -2,13 +2,13 @@ export type ApiResult<TResult> = {
     stat: 'ok' | 'fail';
     result?: TResult;
     err?: number;
-    message?: number;
+    message?: string;
 };
 
-export type Pageable<TOrder = string> = {
+export type Pageable = {
     per_page?: number;
     page?: number;
-    order?: TOrder;
+    order?: string;
 };
 
 export type Paging = {
@@ -27,13 +27,13 @@ export type Version = string;
 
 export type ImageSize = 'square' | 'thumb' | '2small' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | '3xlarge' | '4xlarge';
 
-export type ImageSortField = 'id' | 'file' | 'name' | 'hit' | 'rating_score' | 'date_creation' | 'date_available' | 'random';
-
+// added via pwa plugin
 export type PwaConfig = {
     gallery_locked: boolean;
     gallery_title: string;
     page_banner: string;
     week_starts_on: string;
+    order_by: string;
     category_url_style: 'id' | 'id-name';
     picture_url_style: 'id' | 'id-file' | 'file';
     tag_url_style: 'id' | 'id-tag' | 'tag';
@@ -67,9 +67,6 @@ export type PwaConfig = {
         filesize: boolean;
         tags: boolean;
         rating_score: boolean;
-    };
-    pwa_backend: {
-        frontend_url: string;
     };
 };
 
@@ -122,8 +119,15 @@ export type GetCategoriesParams = {
     recursive?: boolean;
     public?: boolean;
     tree_output?: boolean;
+    fullname?: boolean;
     search?: string;
     thumbnail_size?: ImageSize;
+};
+
+// added via pwa plugin
+export type GetCategoryInfoParams = {
+    cat_id: number;
+    public?: boolean;
 };
 
 export type Category = {
@@ -145,10 +149,22 @@ export type Category = {
     name_raw: string;
     comment_raw?: string;
     tn_url: string;
-    sub_categories?: Category[];
 };
 
-export type GetCategoryImagesParams = Pageable<ImageSortField> & {
+export type CategoryWithSubCategories = Category & {
+    sub_categories?: CategoryWithSubCategories[];
+};
+
+// added via pwa plugin
+export type CategoryInfo = Category & {
+    tn_url: never;
+    parents: Array<{
+        id: number;
+        name: string;
+    }>;
+};
+
+export type GetCategoryImagesParams = Pageable & {
     cat_id?: number | number[];
     recursive?: boolean;
 };
@@ -174,10 +190,12 @@ export type Image = {
     element_url: string;
     download_url: string;
     derivatives: Record<ImageSize, Derivative>;
-    // plugins
+    // core but added via pwa plugin
+    latitude?: number;
+    longitude?: number;
+    // plugins, added via pwa plugin
     is_gvideo?: boolean;
     is_sphere?: boolean;
-    [K: string]: any;
 };
 
 export type ImageWithCategories = Image & {
@@ -201,6 +219,10 @@ export type GetImageInfoParams = {
     image_id: number;
     comments_per_page?: number;
     comments_page?: number;
+    // added via pwa plugin
+    content_cat_id?: number;
+    content_tag_id?: number;
+    content_order?: string;
 };
 
 export type ImageInfo = Image & {
@@ -214,8 +236,6 @@ export type ImageInfo = Image & {
     md5sum: string;
     added_by: string; // user id
     rotation?: number;
-    latitude?: number;
-    longitude?: number;
     lastmodified: string; // yyyy-mm-dd MM-DD-SS
     name_raw: string;
     comment_raw?: string;
@@ -252,9 +272,22 @@ export type ImageInfo = Image & {
         author: string;
         content: string;
     }[];
+    // added via pwa plugin
+    navigation?: {
+        nb_images: number;
+        current_rank: number;
+        previous_item?: {
+            id: number;
+            name: string;
+        };
+        next_item?: {
+            id: number;
+            name: string;
+        };
+    };
 };
 
-export type SearchImagesParams = Pageable<ImageSortField> & {
+export type SearchImagesParams = Pageable & {
     query: string;
 };
 
@@ -294,7 +327,7 @@ export type Tag = {
     url: string;
 };
 
-export type GetTagImagesParams = Pageable<ImageSortField> & {
+export type GetTagImagesParams = Pageable & {
     tag_id?: number | number[];
     tag_url_name?: string | string[];
     tag_name?: string | string[];
