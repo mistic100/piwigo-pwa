@@ -33,7 +33,7 @@ export type PwaConfig = {
     gallery_title: string;
     page_banner: string;
     week_starts_on: string;
-    order_by: string;
+    image_order: string;
     category_url_style: 'id' | 'id-name';
     picture_url_style: 'id' | 'id-file' | 'file';
     tag_url_style: 'id' | 'id-tag' | 'tag';
