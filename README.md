@@ -45,3 +45,4 @@ fi
 sed -i "/$(echo "$SEARCH_STRING" | sed 's/[.[\*^$]/\\&/g')/a \\  $INSERT_STRING" "$TARGET_FILE"
 
 echo "File patched successfully."
+```

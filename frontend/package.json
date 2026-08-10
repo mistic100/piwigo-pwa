@@ -30,6 +30,10 @@
 		"vite": "^8.0.16"
 	},
 	"dependencies": {
-		"slug": "^12.0.1"
+		"@tailwindcss/vite": "^4.3.3",
+		"flowbite": "^4.0.2",
+		"flowbite-svelte": "^2.0.0-next.14",
+		"slug": "^12.0.1",
+		"tailwindcss": "^4.3.3"
 	}
 }
