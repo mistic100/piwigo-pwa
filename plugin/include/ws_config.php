@@ -44,7 +44,6 @@ function pwa_backend_ws_getConfig()
     $ret['image_order'] = str_replace('ORDER BY ', '', $conf['order_by']);
     $ret['derivatives'] = safe_unserialize($conf['derivatives'])['d'];
     $ret['picture_informations'] = safe_unserialize($conf['picture_informations']);
-    $ret[PWA_BACKEND_ID] = safe_unserialize($conf[PWA_BACKEND_ID]);
 
     return $ret;
 }

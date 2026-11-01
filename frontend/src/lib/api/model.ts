@@ -272,6 +272,7 @@ export type ImageInfo = Image & {
         author: string;
         content: string;
     }[];
+    photosphere_config?: unknown;
     // added via pwa plugin
     navigation?: {
         nb_images: number;

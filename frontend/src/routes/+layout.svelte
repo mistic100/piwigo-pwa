@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Header from '#lib/components/Header.svelte';
     import * as Breadcrumb from "#lib/components/ui/breadcrumb/index.js";
 	import "../app.css";
 
@@ -9,10 +10,9 @@
 	<title>{data.config?.gallery_title}</title>
 </svelte:head>
 
-<header>
-	<h1>{data.config.gallery_title}</h1>
+<Header config={data.config}/>
+
 	<!-- {@html data.galleryConfig.page_banner} -->
-</header>
 
 <Breadcrumb.Root>
   <Breadcrumb.List>

@@ -255,10 +255,15 @@ export class PiwigoApi {
 /**
  * Typecast some know fields with invalid type
  */
-function patchKnownFields(image: Image) {
+function patchKnownFields(image: Image | ImageInfo) {
     ['is_gvideo', 'is_sphere'].forEach(boolKey => {
         if (boolKey in image) {
+            // @ts-ignore
             image[boolKey] = image[boolKey] === true || image[boolKey] === '1';
         }
     });
+    if ('photosphere_config' in image) {
+        // @ts-ignore
+        image.photosphere_config = JSON.parse(image.photosphere_config);
+    }
 }
