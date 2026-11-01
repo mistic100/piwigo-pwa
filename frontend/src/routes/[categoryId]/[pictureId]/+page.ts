@@ -1,4 +1,4 @@
-import type { Image } from '$lib/api/model';
+import type { Image } from '#lib/api/model.js';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ params }) => {

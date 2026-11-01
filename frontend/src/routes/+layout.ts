@@ -1,8 +1,8 @@
-import type { AppConfig, FrontendConfig } from '$lib';
-import { PiwigoApi } from '$lib/api';
+import type { AppConfig, FrontendConfig } from '#lib';
+import { PiwigoApi } from '#lib/api/index.js';
 import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
-import type { PwaConfig } from '$lib/api/model';
+import type { PwaConfig } from '#lib/api/model.js';
 
 export const ssr = false;
 

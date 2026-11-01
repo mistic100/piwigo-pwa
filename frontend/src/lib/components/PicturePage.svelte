@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Image } from '$lib/api/model';
+    import type { Image } from '#lib/api/model.js';
 
     let props: { picture: Image, categoryId?: string, tagId?: string } = $props();
 </script>

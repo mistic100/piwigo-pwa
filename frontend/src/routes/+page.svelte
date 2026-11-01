@@ -1,5 +1,5 @@
 <script lang="ts">
-    import AlbumPage from '$lib/components/AlbumPage.svelte';
+    import AlbumPage from '#lib/components/AlbumPage.svelte';
     import type { PageProps } from "./$types";
 
     const { data }: PageProps = $props();

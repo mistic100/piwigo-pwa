@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { AppConfig } from "$lib";
-    import type { Category, CategoryInfo, ImageWithCategories, Page } from "$lib/api/model";
-    import { getAlbumUrl, getPictureUrl } from "$lib/utils/url.utils";
+    import type { AppConfig } from "#lib";
+    import type { Category, CategoryInfo, ImageWithCategories, Page } from "#lib/api/model.js";
+    import { getAlbumUrl, getPictureUrl } from "#lib/utils/url.utils.js";
 
     const {
         category,

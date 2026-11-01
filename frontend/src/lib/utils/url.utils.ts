@@ -1,5 +1,5 @@
-import type { AppConfig } from '$lib';
-import type { Category, Image, Tag } from '$lib/api/model';
+import type { AppConfig } from '#lib';
+import type { Category, Image, Tag } from '#lib/api/model.js';
 import slug from 'slug';
 
 export function getIdFromUrl(str: string): number {

@@ -1,4 +1,4 @@
-import { getIdFromUrl } from '$lib/utils/url.utils';
+import { getIdFromUrl } from '#lib/utils/url.utils.js';
 import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
