@@ -1,3 +1,4 @@
 {
-    "backendUrl": "http://localhost:8100/"
+    "backendUrl": "http://localhost:8100/",
+    "displayBanner": true
 }

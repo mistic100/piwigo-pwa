@@ -4,6 +4,7 @@ import type { PwaConfig } from './api/model';
 
 export type FrontendConfig = {
     backendUrl: string;
+    displayBanner: boolean;
 };
 
 export type AppConfig = PwaConfig & FrontendConfig;

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { AppConfig } from "#lib";
     import type {
         Category,
         CategoryInfo,
@@ -7,17 +6,18 @@
         Page,
     } from "#lib/api/model.js";
     import { getAlbumUrl, getPictureUrl } from "#lib/utils/url.utils.js";
+    import { page } from '$app/state';
+
+    const { config } = page.data;
 
     const {
         category,
         categories,
         images,
-        config,
     }: {
         category?: CategoryInfo;
         categories: Category[] | Promise<Category[]>;
         images?: Promise<Page<ImageWithCategories>>;
-        config: AppConfig;
     } = $props();
 </script>
 

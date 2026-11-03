@@ -1,22 +1,17 @@
+<!--
+Main header with title, responsive navigation menu
+-->
+
 <script lang="ts">
-    import type { AppConfig } from "#lib";
     import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.js";
     import { Separator } from "#lib/components/ui/separator/index.js";
     import * as Sheet from "#lib/components/ui/sheet/index.js";
+    import { page } from "$app/state";
     import MenuIcon from "@lucide/svelte/icons/menu";
     import { MediaQuery } from "svelte/reactivity";
-    import type { Category, Tag } from "../api/model";
     import { getAlbumUrl, getTagUrl } from "../utils/url.utils";
 
-    const {
-        config,
-        categories,
-        tags,
-    }: {
-        config: AppConfig;
-        categories: Category[];
-        tags: Tag[];
-    } = $props();
+    const { rootCategories, allTags, config } = page.data;
 
     const menuSections: Array<{
         title: string;
@@ -24,22 +19,29 @@
     }> = [
         {
             title: "Albums",
-            items: categories.map((cat) => ({
+            items: rootCategories.map((cat) => ({
                 name: cat.name,
                 link: getAlbumUrl(cat, config),
             })),
         },
         {
             title: "Tags",
-            items: tags.map((tag) => ({
+            items: allTags.map((tag) => ({
                 name: tag.name,
                 link: getTagUrl(tag, config),
             })),
         },
-        { title: "Browse", items: [{ name: "Recent photos", link: "recent" }] },
+        {
+            title: "Browse",
+            items: [{ name: "Recent photos", link: "recent" }],
+        },
     ];
 
     const isDesktop = new MediaQuery("(min-width: 768px)");
+
+    const isRoot = $derived.by(() => {
+        return page.data.isRoot;
+    });
 </script>
 
 <header
@@ -113,3 +115,9 @@
         </Sheet.Root>
     {/if}
 </header>
+
+{#if isRoot && config.displayBanner}
+<div class="my-4 px-8 pb-4 border-b typeset typeset-banner">
+    {@html config.page_banner}
+</div>
+{/if}

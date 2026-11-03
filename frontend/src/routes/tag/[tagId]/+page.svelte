@@ -1,11 +1,20 @@
 <script lang="ts">
+    import { getPictureUrl } from '#lib/utils/url.utils.js';
     import type { PageProps } from "./$types";
 
-    let { params }: PageProps = $props();
+    let { data }: PageProps = $props();
 </script>
 
-<h2>Tag {params.tagId}</h2>
+<h2>Tag {data.tag.id}</h2>
 
-<a href="/tag/{params.tagId}/map">Map</a>
-<a href="/tag/{params.tagId}/picture/1">Picture 1</a>
-<a href="/tag/{params.tagId}/picture/2">Picture 2</a>
+{#await data.images}
+    Loading
+{:then images}
+    {#each images.elements as image (image.id)}
+        <div>
+            <a href={getPictureUrl(image, { tag: data.tag }, data.config)}
+                >{image.name}</a
+            >
+        </div>
+    {/each}
+{/await}

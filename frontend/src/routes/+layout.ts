@@ -1,11 +1,19 @@
-import type { AppConfig, FrontendConfig } from '#lib';
+import type { FrontendConfig } from '#lib';
 import { PiwigoApi } from '#lib/api/index.js';
+import type { PwaConfig } from '#lib/api/model.js';
 import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
-import type { PwaConfig } from '#lib/api/model.js';
 
 export const ssr = false;
 
+/**
+ * Initial app load
+ * 1. local config.json file
+ * 2. instance configuration via API
+ * 3. global data via API
+ *      a. root categories
+ *      b. tags
+ */
 export const load: LayoutLoad = async ({ fetch }) => {
     let config: FrontendConfig;
     try {
@@ -34,7 +42,7 @@ export const load: LayoutLoad = async ({ fetch }) => {
         error(404, `Unable to contact Piwigo backend.`);
     }
 
-    const [rootCategories, tags] = await Promise.all([
+    const [rootCategories, allTags] = await Promise.all([
         client.getCategories({ public: true }),
         client.getTags(),
     ]);
@@ -43,9 +51,9 @@ export const load: LayoutLoad = async ({ fetch }) => {
         config: {
             ...config,
             ...galleryConfig
-        } as AppConfig,
+        },
         client,
         rootCategories,
-        tags,
-    };
+        allTags,
+    } satisfies App.PageData;
 };

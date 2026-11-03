@@ -1,8 +1,7 @@
 <script lang="ts">
     import AlbumPage from "#lib/components/AlbumPage.svelte";
-    import type { PageProps } from "./$types";
 
-    let { data }: PageProps = $props();
+    let { data } = $props();
 </script>
 
 <svelte:head>
@@ -13,5 +12,4 @@
     category={data.category}
     categories={data.categories}
     images={data.images}
-    config={data.config}
 />

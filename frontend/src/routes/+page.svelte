@@ -1,10 +1,9 @@
 <script lang="ts">
     import AlbumPage from '#lib/components/AlbumPage.svelte';
-    import type { PageProps } from "./$types";
 
-    const { data }: PageProps = $props();
+    const { data } = $props();
 </script>
 
 <h2>Home</h2>
 
-<AlbumPage categories={data.rootCategories} config={data.config}/>
+<AlbumPage categories={data.rootCategories}/>

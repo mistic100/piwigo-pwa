@@ -13,7 +13,6 @@ function pwa_backend_ws_getConfig()
     $copy_fields = array(
         'gallery_locked',
         'gallery_title',
-        'page_banner',
         'week_starts_on',
         'category_url_style',
         'picture_url_style',
@@ -40,6 +39,11 @@ function pwa_backend_ws_getConfig()
     foreach ($copy_fields as $field) {
         $ret[$field] = $conf[$field];
     }
+
+    $ret['page_banner'] = trigger_change(
+        'render_page_banner',
+        str_replace('%gallery_title%', $conf['gallery_title'], $conf['page_banner'])
+    );
 
     $ret['image_order'] = str_replace('ORDER BY ', '', $conf['order_by']);
     $ret['derivatives'] = safe_unserialize($conf['derivatives'])['d'];

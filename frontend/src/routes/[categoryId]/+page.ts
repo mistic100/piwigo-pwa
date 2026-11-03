@@ -1,25 +1,15 @@
-import { getIdFromUrl } from '#lib/utils/url.utils.js';
-import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-// export const load: PageLoad = async ({ parent, params }) => {
-//     const categoryId = getIdFromUrl(params.categoryId);
-//     if (!categoryId) {
-//         throw error(404, 'Album not found');
-//     }
+export const load: PageLoad = async ({ parent, params }) => {
+    const { client, category } = await parent();
 
-//     const { client } = await parent();
+    const categories = client.getCategories({ cat_id: category.id, public: true })
+        .then(categories => categories.filter(({ id }) => id !== category.id));
 
-//     const category = await client.getCategoryInfo({ cat_id: categoryId, public: true });
+    const images = client.getCategoryImages({ cat_id: category.id });
 
-//     const categories = client.getCategories({ cat_id: categoryId, public: true })
-//         .then(categories => categories.filter(({ id }) => id !== category.id));
-
-//     const images = client.getCategoryImages({ cat_id: categoryId });
-
-//     return {
-//         category,
-//         categories,
-//         images,
-//     };
-// };
+    return {
+        categories,
+        images,
+    };
+};
