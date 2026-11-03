@@ -34,11 +34,18 @@ export const load: LayoutLoad = async ({ fetch }) => {
         error(404, `Unable to contact Piwigo backend.`);
     }
 
+    const [rootCategories, tags] = await Promise.all([
+        client.getCategories({ public: true }),
+        client.getTags(),
+    ]);
+
     return {
         config: {
             ...config,
             ...galleryConfig
         } as AppConfig,
         client,
+        rootCategories,
+        tags,
     };
 };

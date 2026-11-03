@@ -1,6 +1,11 @@
 <script lang="ts">
     import type { AppConfig } from "#lib";
-    import type { Category, CategoryInfo, ImageWithCategories, Page } from "#lib/api/model.js";
+    import type {
+        Category,
+        CategoryInfo,
+        ImageWithCategories,
+        Page,
+    } from "#lib/api/model.js";
     import { getAlbumUrl, getPictureUrl } from "#lib/utils/url.utils.js";
 
     const {
@@ -10,7 +15,7 @@
         config,
     }: {
         category?: CategoryInfo;
-        categories: Promise<Category[]>;
+        categories: Category[] | Promise<Category[]>;
         images?: Promise<Page<ImageWithCategories>>;
         config: AppConfig;
     } = $props();
@@ -36,15 +41,17 @@
 </div>
 
 {#if images}
-<div>
-    {#await images}
-        Loading
-    {:then images}
-        {#each images.elements as image (image.id)}
-            <div>
-                <a href={getPictureUrl(image, { category }, config)}>{image.name}</a>
-            </div>
-        {/each}
-    {/await}
-</div>
+    <div>
+        {#await images}
+            Loading
+        {:then images}
+            {#each images.elements as image (image.id)}
+                <div>
+                    <a href={getPictureUrl(image, { category }, config)}
+                        >{image.name}</a
+                    >
+                </div>
+            {/each}
+        {/await}
+    </div>
 {/if}

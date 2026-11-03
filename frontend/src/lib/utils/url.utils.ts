@@ -8,7 +8,7 @@ export function getIdFromUrl(str: string): number {
 }
 
 export function getAlbumUrl(
-    category: Category,
+    category: { id: number, name: string },
     config: AppConfig
 ) {
     if (config.category_url_style === 'id-name') {

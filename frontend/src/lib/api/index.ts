@@ -168,12 +168,13 @@ export class PiwigoApi {
         });
     }
 
-    getTags(params?: GetTagsParams): Promise<Tag[]> {
-        return this.call<Tag[]>({
+    async getTags(params?: GetTagsParams): Promise<Tag[]> {
+        const result = await this.call<{ tags: Tag[] }>({
             method: 'GET',
             methodName: 'pwg.tags.getList',
             params,
         });
+        return result.tags;
     }
 
     async getTagImages(params: GetTagImagesParams): Promise<Page<ImageWithTags>> {

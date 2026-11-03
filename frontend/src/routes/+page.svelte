@@ -7,4 +7,4 @@
 
 <h2>Home</h2>
 
-<AlbumPage categories={data.categories} config={data.config}/>
+<AlbumPage categories={data.rootCategories} config={data.config}/>
