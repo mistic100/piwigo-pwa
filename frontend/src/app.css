@@ -135,3 +135,10 @@
   --typeset-leading: 1.75;
   --typeset-flow: 1.25em;
 }
+
+.typeset-description {
+  --typeset-font-body: var(--font-sans);
+  --typeset-size: 14px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+}

@@ -6,6 +6,7 @@ Main header with title, responsive navigation menu
     import * as NavigationMenu from "#lib/components/ui/navigation-menu/index.js";
     import { Separator } from "#lib/components/ui/separator/index.js";
     import * as Sheet from "#lib/components/ui/sheet/index.js";
+    import { getShortDescription } from "#lib/utils/album.utils.js";
     import { page } from "$app/state";
     import MenuIcon from "@lucide/svelte/icons/menu";
     import { MediaQuery } from "svelte/reactivity";
@@ -42,10 +43,19 @@ Main header with title, responsive navigation menu
     const isRoot = $derived.by(() => {
         return page.data.isRoot;
     });
+
+    const category = $derived.by(() => {
+        if (page.data.category) {
+            return {
+                name: page.data.category.name,
+                description: getShortDescription(page.data.category),
+            };
+        }
+    });
 </script>
 
 <header
-    class="sticky top-0 flex h-[55px] w-full items-center justify-between gap-4 px-4 border-b bg-background"
+    class="sticky top-0 flex h-[55px] w-full items-center justify-between gap-4 mb-4 px-8 border-b bg-background"
 >
     <h1 class="uppercase">{config.gallery_title}</h1>
 
@@ -116,8 +126,13 @@ Main header with title, responsive navigation menu
     {/if}
 </header>
 
-{#if isRoot && config.displayBanner}
-<div class="my-4 px-8 pb-4 border-b typeset typeset-banner">
-    {@html config.page_banner}
-</div>
+{#if config.displayBanner}
+    <div class="mb-4 px-8 pb-4 border-b typeset typeset-banner">
+        {#if isRoot}
+            {@html config.page_banner}
+        {:else if category}
+            <h1>{category.name}</h1>
+            {@html category.description}
+        {/if}
+    </div>
 {/if}

@@ -38,22 +38,24 @@
     });
 </script>
 
-<Breadcrumb.Root>
-    <Breadcrumb.List>
-        {#each breadcrumbs as crumb, index}
-            {#if index > 0}
-                <Breadcrumb.Separator />
-            {/if}
-
-            <Breadcrumb.Item>
-                {#if index === breadcrumbs.length - 1}
-                    <Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
-                {:else}
-                    <Breadcrumb.Link href={crumb.href}>
-                        {crumb.label}
-                    </Breadcrumb.Link>
+<div class="mb-4 pb-4 px-8 border-b">
+    <Breadcrumb.Root>
+        <Breadcrumb.List>
+            {#each breadcrumbs as crumb, index}
+                {#if index > 0}
+                    <Breadcrumb.Separator />
                 {/if}
-            </Breadcrumb.Item>
-        {/each}
-    </Breadcrumb.List>
-</Breadcrumb.Root>
+
+                <Breadcrumb.Item>
+                    {#if index === breadcrumbs.length - 1}
+                        <Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
+                    {:else}
+                        <Breadcrumb.Link href={crumb.href}>
+                            {crumb.label}
+                        </Breadcrumb.Link>
+                    {/if}
+                </Breadcrumb.Item>
+            {/each}
+        </Breadcrumb.List>
+    </Breadcrumb.Root>
+</div>

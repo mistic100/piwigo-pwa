@@ -5,8 +5,9 @@
         ImageWithCategories,
         Page,
     } from "#lib/api/model.js";
+    import { getLongDescription } from "#lib/utils/album.utils.js";
     import { getAlbumUrl, getPictureUrl } from "#lib/utils/url.utils.js";
-    import { page } from '$app/state';
+    import { page } from "$app/state";
 
     const { config } = page.data;
 
@@ -19,13 +20,16 @@
         categories: Category[] | Promise<Category[]>;
         images?: Promise<Page<ImageWithCategories>>;
     } = $props();
+
+    const description = $derived.by(() => {
+        return category ? getLongDescription(category) : null;
+    });
 </script>
 
-{#if category}
-    <h2>Album {category.name}</h2>
-    {#each category.parents as parent (parent.id)}
-        {parent.name} /
-    {/each}
+{#if category && description}
+    <div class="mb-4 px-8 pb-4 border-b typeset typeset-description">
+        {@html description}
+    </div>
 {/if}
 
 <div>
